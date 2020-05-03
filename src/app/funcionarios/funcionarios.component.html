@@ -1,0 +1,140 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="toolbar" role="banner">
+   <img width="120" src="../../assets/LOGO.png"/> 
+  <div class="spacer"></div>    
+  <div style="float: right; padding: 1%;" class="">
+      <button (click)="funcionariosUF()" style="background-color: #0e89ff; color: white" onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-rigth"><i class="fa fa-gear"></i> Listar UFs</button>       
+   </div>
+   <div style="float: right; padding: 1%;" class="">
+     <button (click)="novoFuncionario()" style="background-color: #0abb19; color: white" onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-rigth"><i class="fa fa-plus"></i>  Novo Funcionário</button>       
+   </div>       
+  </div>
+  <div  style="padding-top: 2%;" class="w3-container w3-animate-right">
+    <form class="w3-container w3-card w3-white">
+        <div class="w3-row-padding w3-section">
+          <div class="w3-third">   
+            <select class="w3-select" [(ngModel)]="req.tipo" name="tipo" >
+                <option value="0">Localizar todos</option>
+                <option value="1">Serviço que localiza funcionários por Nome</option>
+                <option value="2">Serviço que localiza funcionários por CPF</option>
+                <option value="3">Serviço que localiza funcionários por Cargo</option>
+                <option value="4">Serviço que localiza funcionários por Data de Cadastro</option>
+                <option value="5">Serviço que localiza funcionários por status</option>
+                <option value="6">Serviço que localiza funcionários por faixa salarial (0/99999)</option>                
+              </select>                             
+          </div>           
+            <div class="w3-third">
+                <input class="w3-input" [(ngModel)]="req.pesquisar" name="pesquisar" type="text" placeholder="Digite o que deseja pesquisar...">
+            </div> 
+            <div class="w3-third">
+              <button (click)="funcionarios()" style="float: right; background-color: #0e89ff; color: white;" type="button" class="w3-btn" (mouseover)="funcionarios()"><i class="fa fa-search"></i> Pesquisar </button> 
+            </div>                                
+          </div>           
+      </form>      
+</div>
+<div style="padding-top: 2%;" class="w3-container w3-animate-right">
+<table id="listaFuncionarios" class="w3-table w3-striped">
+  <tr>
+    <th>Data Cadastro</th>
+    <th>Cargo</th>
+    <th>CPF</th>
+    <th>Nome</th>
+    <th>UF Nascimento</th>
+    <th>Salário</th>
+    <th>Status</th>        
+    <th>Excluir</th>
+    <th>Editar</th>    
+</tr>
+<tr *ngFor="let a of func">
+  <td>{{a.DataCad}}</td>
+  <td>{{a.Cargo}}</td>
+  <td>{{a.Cpf}}</td>
+  <td>{{a.Nome}}</td>
+  <td>{{a.UfNasc}}</td>
+  <td>{{a.Salario}}</td>  
+  <td>{{a.Status}}</td>   
+  <td><button (click)="excluirFuncionario(a.Cpf)" style="background-color: #e91717dc; color: white;" class="w3-btn"><i class="fa fa-trash"></i></button></td>
+  <td><button (click)="editarFuncionario(a)" onclick="document.getElementById('id02').style.display='block'" style="background-color: #0e89ff; color: white;" class="w3-btn"><i class="fa fa-gear"> Editar</i></button></td>  
+</tr>
+</table>
+</div>
+
+
+<div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-lightgrey"> 
+        <span onclick="document.getElementById('id01').style.display='none'" 
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>Listagem de funcionários por UF</h2>
+      </header>
+      <div class="w3-container">
+        <table id="listaUf" class="w3-table w3-striped">
+          <tr>
+            <th>UF</th>
+            <th>Quant. Funcionários</th>
+        </tr>
+        <tr *ngFor="let a of uf">
+          <td>{{a.UfNasc}}</td>
+          <td>{{a.Quant}}</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="id02" class="w3-modal">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-lightgrey"> 
+        <span onclick="document.getElementById('id02').style.display='none'" 
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>Incluir/Alterar Funcionário</h2>
+      </header>
+      <div class="w3-container">
+        <form class="w3-container w3-card w3-white">
+          <div class="w3-row-padding w3-section">          
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
+                <div class="w3-rest">
+                  <input [(ngModel)]="funcionario.nome" class="w3-input w3-border" name="nome" type="text" placeholder="Nome">
+                </div>
+            </div>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-briefcase"></i></div>
+                <div class="w3-rest">
+                  <input [(ngModel)]="funcionario.cargo" class="w3-input w3-border" name="cargo" type="text" placeholder="Cargo">
+                </div>
+            </div>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-id-card-o"></i></div>
+                <div class="w3-rest">
+                  <input [(ngModel)]="funcionario.cpf" class="w3-input w3-border" name="cpf" type="text" placeholder="CPF">
+                </div>
+            </div>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-money"></i></div>
+                <div class="w3-rest">
+                  <input [(ngModel)]="funcionario.salario" class="w3-input w3-border" name="salario" type="text" placeholder="Salário">
+                </div>
+            </div>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-map-marker"></i></div>
+                <div class="w3-rest">
+                  <input [(ngModel)]="funcionario.ufnasc" class="w3-input w3-border" name="ufNasc" type="text" placeholder="UF de Nascimento">
+                </div>
+            </div>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-info-circle"></i></div>
+                <div class="w3-rest">
+                  <input [(ngModel)]="funcionario.status" class="w3-input w3-border" name="status" type="text" placeholder="Status">
+                </div>
+            </div>                                                                                                                 
+            </div>
+            <p class="w3-center">
+              <button (click)="salvarFuncionario()" style="background-color: #0e89ff; color: white;" type="button" class="w3-btn"><i class="fa fa-save"></i> Salvar </button> 
+            </p>                       
+        </form>      
+      </div>
+    </div>
+  </div>  
+<router-outlet></router-outlet>
