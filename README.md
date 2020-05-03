@@ -1,6 +1,6 @@
-# DesafioLabsFront
+# SmartFront
 Uma aplicação em angular para consumo dos serviços criados pela API:
-[DesafioLabsAPI](https://github.com/dimitryduarte/DesafioLabsAPI)
+[SmartAPI](https://github.com/dimitryduarte/SmartAPI)
 
 ## Tecnologias Utilizadas
 * [Angular CLI](https://github.com/angular/angular-cli) version 8.3.23.
